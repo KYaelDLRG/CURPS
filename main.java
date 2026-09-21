@@ -1,12 +1,34 @@
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
 
 class Main {
-    static int num = 15;
-
     public static void main(String[] args) {
-        for (int i = 0; i < num; i++)
-            System.out.println("CURP = " + getCURP());
+        if (args.length < 2) {
+            System.out.println("Uso obligatorio: java Main <cantidad_n> <sexo: H|M>");
+            return;
+        }
+
+        int n = Integer.parseInt(args[0]);
+        char sexoFiltro = args[1].toUpperCase().charAt(0);
+
+        ArrayList<String> curps = new ArrayList<>();
+        System.out.println("CURPs generadas: " + n);
+        for (int i = 0; i < n; i++) {
+            String curp = getCURP();
+            curps.add(curp);
+            System.out.println("CURP = " + curp);
+        }
+
+        Iterator<String> it = curps.iterator();
+        while (it.hasNext()) {
+            String curp = it.next();
+            if (curp.charAt(10) == sexoFiltro) {
+                it.remove();
+            }
+        }
+
+        System.out.println("\nEl ArrayList de CURPs filtrando los registros " + args[1].toUpperCase() + " es:");
+        System.out.println(curps);
     }
 
     static String getCURP() {
