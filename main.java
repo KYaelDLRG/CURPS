@@ -6,7 +6,9 @@ class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n;
+        char sexoFiltro;
 
+        // 1. Obtención de n (por parámetro o por consola)
         if (args.length > 0) {
             n = Integer.parseInt(args[0]);
         } else {
@@ -14,6 +16,7 @@ class Main {
             n = scanner.nextInt();
         }
 
+        // 2. Generar y almacenar n CURPs en un ArrayList
         ArrayList<String> curps = new ArrayList<>();
         System.out.println("CURPs generadas: " + n);
         for (int i = 0; i < n; i++) {
@@ -22,20 +25,25 @@ class Main {
             System.out.println("CURP = " + curp);
         }
 
-        // El usuario elige desde la consola qué sexo eliminar (H o M)
-        System.out.print("\nElija el sexo que desea eliminar (H/M): ");
-        char sexoFiltro = scanner.next().toUpperCase().charAt(0);
+        // 3. Obtención del sexo a eliminar (por parámetro args[1] o por consola)
+        if (args.length > 1) {
+            sexoFiltro = Character.toUpperCase(args[1].charAt(0));
+        } else {
+            System.out.print("\nElija el sexo que desea eliminar (H/M): ");
+            sexoFiltro = Character.toUpperCase(scanner.next().charAt(0));
+        }
 
-        // Filtrado usando el cursor Iterator
+        // 4. Filtrar la lista usando obligatoriamente el cursor Iterator
         Iterator<String> it = curps.iterator();
         while (it.hasNext()) {
             String curp = it.next();
+            // El sexo se encuentra en la posición 11 (índice 10)
             if (curp.charAt(10) == sexoFiltro) {
                 it.remove();
             }
         }
 
-        // Reimprimir la lista filtrada
+        // 5. Reimprimir la lista filtrada
         System.out.println("\nEl ArrayList de CURPs filtrando los registros " + sexoFiltro + " es:");
         System.out.println(curps);
 
@@ -66,7 +74,7 @@ class Main {
         indice = (int) (Sexo.length() * Math.random());
         sb.append(Sexo.charAt(indice));
 
-        sb.append(Entidad[(int) (Math.random() * 32)]);
+        sb.append(Entidad[(int) (Math.random() * Entidad.length)]);
 
         for (int i = 14; i < 17; i++) {
             indice = (int) (Letra.length() * Math.random());
