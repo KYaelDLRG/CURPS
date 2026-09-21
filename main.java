@@ -1,15 +1,18 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        if (args.length < 2) {
-            System.out.println("Uso obligatorio: java Main <cantidad_n> <sexo: H|M>");
-            return;
-        }
+        Scanner scanner = new Scanner(System.in);
+        int n;
 
-        int n = Integer.parseInt(args[0]);
-        char sexoFiltro = args[1].toUpperCase().charAt(0);
+        if (args.length > 0) {
+            n = Integer.parseInt(args[0]);
+        } else {
+            System.out.print("Ingrese la cantidad de CURPs a generar: ");
+            n = scanner.nextInt();
+        }
 
         ArrayList<String> curps = new ArrayList<>();
         System.out.println("CURPs generadas: " + n);
@@ -19,6 +22,11 @@ class Main {
             System.out.println("CURP = " + curp);
         }
 
+        // El usuario elige desde la consola qué sexo eliminar (H o M)
+        System.out.print("\nElija el sexo que desea eliminar (H/M): ");
+        char sexoFiltro = scanner.next().toUpperCase().charAt(0);
+
+        // Filtrado usando el cursor Iterator
         Iterator<String> it = curps.iterator();
         while (it.hasNext()) {
             String curp = it.next();
@@ -27,8 +35,11 @@ class Main {
             }
         }
 
-        System.out.println("\nEl ArrayList de CURPs filtrando los registros " + args[1].toUpperCase() + " es:");
+        // Reimprimir la lista filtrada
+        System.out.println("\nEl ArrayList de CURPs filtrando los registros " + sexoFiltro + " es:");
         System.out.println(curps);
+
+        scanner.close();
     }
 
     static String getCURP() {
